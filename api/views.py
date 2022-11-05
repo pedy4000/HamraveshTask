@@ -1,7 +1,22 @@
-from django.shortcuts import render
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.viewsets import ViewSet
 
-@api_view(['GET'])
-def getData(request):
-    return Response('start first django task!')
+class AppViewSet(ViewSet):
+    def create(self, request):
+        return Response('create')
+    def list(self, request):
+        return Response('list')
+    def get(self, request, id):
+        return Response('get ' + id)
+
+    def delete(self, request):
+        return Response('delete')
+
+    def edit(self, request):
+        return Response('edit')
+
+    def run(self, request):
+        return Response('run')
+
+    def actionsHistory(self, request):
+        return Response('history')
