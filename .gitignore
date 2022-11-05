@@ -87,4 +87,5 @@ local_settings.py
 
 .env
 .vscode
+.idea
 db.sqlite3
