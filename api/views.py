@@ -62,6 +62,7 @@ class AppViewSet(ViewSet):
             model_data['app_id'] = model_data['id']
             del model_data['id']
             model_data['name'] = container.name
+            model_data['container_id'] = container.id
             Container.objects.create(**model_data)
         
         try:
@@ -76,5 +77,12 @@ class AppViewSet(ViewSet):
         except docker.errors.APIError as err:
             return Response("duplicate name for container", status=status.HTTP_409_CONFLICT)
 
-    def actions_history(self, request):
-        return Response('history')
+    def container_history(self, request):
+        containerList = [model_to_dict(container)
+                    for container in Container.objects.all()]
+        
+        for container_model in containerList:
+            container = client.containers.get(container_model['container_id'])
+            container_model['status'] = container.status
+            
+        return Response(containerList, status=status.HTTP_200_OK)

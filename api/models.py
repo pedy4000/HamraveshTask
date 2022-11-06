@@ -10,6 +10,7 @@ class App(models.Model):
 
 class Container(models.Model):
     app_id = models.CharField(max_length=256)
+    container_id = models.CharField(max_length=256)
     name = models.CharField(max_length=256)
     image = models.CharField(max_length=256)
     environment = models.CharField(max_length=1028)
