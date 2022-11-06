@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 from rest_framework.request import Request
 from rest_framework import status
-from .models import App
+from .models import App, Container
 import docker
 import json
 
@@ -58,11 +58,18 @@ class AppViewSet(ViewSet):
             env = env.replace("'", "\"")
             return json.loads(env)
         
+        def add_container_model(model_data):
+            model_data['app_id'] = model_data['id']
+            del model_data['id']
+            model_data['name'] = container.name
+            Container.objects.create(**model_data)
+        
         try:
             app = model_to_dict(App.objects.get(id=id))
             container = client.containers.run(
                 name=app['name'], image=app['image'], environment=to_json(app['environment']), command=app['command'], detach=True)
-    
+            
+            add_container_model(app.copy())
             return Response(container.logs(), status=status.HTTP_200_OK)
         except App.DoesNotExist as err:
             return Response(status=status.HTTP_404_NOT_FOUND)
