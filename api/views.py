@@ -12,12 +12,9 @@ client = docker.from_env()
 
 class AppViewSet(ViewSet):
     def create(self, request: Request):
-        try:
-            app = App.objects.create(**request.data)
-            app.save()
-            return Response(model_to_dict(app), status=status.HTTP_201_CREATED)
-        except utils.IntegrityError as err:
-            return Response("duplicate name for app", status=status.HTTP_409_CONFLICT)
+        app = App.objects.create(**request.data)
+        app.save()
+        return Response(model_to_dict(app), status=status.HTTP_201_CREATED)
 
     def list(self, request):
         appsList = [model_to_dict(app) for app in App.objects.all()]
