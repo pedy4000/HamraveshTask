@@ -15,4 +15,4 @@ class Container(models.Model):
     image = models.CharField(max_length=256)
     environment = models.CharField(max_length=1028)
     command = models.CharField(max_length=1028)
-    created_at = models.DateTimeField(max_length=256, default=timezone.now())
+    created_at = models.DateTimeField(max_length=256, default=timezone.now)
