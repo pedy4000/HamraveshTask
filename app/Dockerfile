@@ -31,7 +31,7 @@ FROM --platform=$BUILDPLATFORM python:3.7-alpine AS builder
 # expose port
 EXPOSE 8000
 
-# ser work directory
+# set work directory
 WORKDIR /app 
 
 # install dependencies
@@ -49,8 +49,8 @@ CMD ["manage.py", "runserver", "0.0.0.0:8000"]
 FROM builder as dev-envs
 RUN apk update && apk add git
 
-# RUN  addgroup -S docker && adduser -S --shell /bin/bash --ingroup docker vscode
+RUN  addgroup -S docker && adduser -S --shell /bin/bash --ingroup docker vscode
 
 # install docker tools (cli, buildx, compose)
-# COPY --from=gloursdocker/docker / /
+COPY --from=gloursdocker/docker / /
 CMD ["manage.py", "runserver", "0.0.0.0:8000"]
