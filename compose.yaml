@@ -9,4 +9,4 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     
   # also you can run with 
-  # docker run my-app:1.0 -d -p 8000:8000 -v /var/run/docker.sock:/var/run/docker.sock
+  # docker run -d -p 8000:8000 -v /var/run/docker.sock:/var/run/docker.sock pedyd/hamravesh-task:1.0
