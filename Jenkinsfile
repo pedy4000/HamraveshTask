@@ -9,6 +9,8 @@ pipeline {
         stage("build") {
             steps {
               echo 'building the app..'
+              sudo docker-compose -f compose.yaml up
+              echo 'build done'
             }
         }
         stage("test") {
